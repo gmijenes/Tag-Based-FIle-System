@@ -18,8 +18,8 @@ def openTag(tag):
     
     pass
 
-def addTag(id, tag):
-    pass
+def addTag(s, msg):
+    s.send(msg.encode())
 
 def addFile(s, msg):
     s.send(msg.encode())
@@ -40,11 +40,11 @@ def addFile(s, msg):
     print("The file has been send")
 
 
-def deleteTag(id, tag):
-    pass
+def deleteTag(s, msg):
+    s.send(msg.encode())
 
-def deleteFile(id):
-    pass
+def deleteFile(s, msg):
+    s.send(msg.encode())
 
 def initializeInstructions():
     instructions["openFile"] = openFile
