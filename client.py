@@ -87,8 +87,15 @@ def initializeInstructions():
 
 
 initializeInstructions()
-ipServer = "127.0.0.1"
-puertoServidor = 8083
+
+print("Introduzca la dirección del servidor")
+dataConection = input(">")
+
+_dataConection = dataConection.split(':')
+
+ipServer = _dataConection[0]
+puertoServidor = int(_dataConection[1])
+
 
 print(ipServer + ' ' +str(puertoServidor))
 
@@ -97,6 +104,8 @@ while True:
     client.connect((ipServer, puertoServidor))
     print("me conecte al server")
 
+    sucServer = client.recv(1024)
+
     msg = input("> ") 
     print(msg)
     tokens = msg.split()
@@ -104,7 +113,14 @@ while True:
     try:
         instructions[tokens[0]](client, msg)
     except:
-        print("--There has been a syntax error--")
+        try:
+            _sucServer = sucServer.decode().split(':')
+            sucIP = _sucServer[0]
+            sucPort = int(_sucServer[1])
+            client.connect((sucIP, sucPort))
+            instructions[tokens[0](client, msg)]
+        except:
+            print("--There has been a syntax error--")
 
 
     #client.send(bytes(msg.encode()))

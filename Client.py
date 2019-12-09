@@ -3,6 +3,7 @@ import socket
 instructions = {}
 
 def openFile(s, msg):
+    sucServer = s.recv(1024)
     tokens = msg.split()
     #tokens = openFile id
     s.send(msg.encode())
@@ -15,6 +16,8 @@ def openFile(s, msg):
     file.close()
 
 def openTag(s, msg):
+    sucServer = s.recv(1024)
+
     s.send(msg.encode())
     ffiles = open("files", "wb")
     input_data = s.recv(1024)
@@ -33,9 +36,13 @@ def openTag(s, msg):
     ftags.close()
 
 def addTag(s, msg):
+    sucServer = s.recv(1024)
+
     s.send(msg.encode())
 
 def addFile(s, msg):
+    sucServer = s.recv(1024)
+
     s.send(msg.encode())
     tokens = msg.split()
     #tokens = addFile, _path, _id
@@ -54,6 +61,8 @@ def addFile(s, msg):
     print("The file has been send")
 
 def addFileKey(s, msg, _bool):
+    sucServer = s.recv(1024)
+
     s.send(msg.encode())
     tokens = msg.split()
     #tokens = addFile, _path, _id
@@ -73,9 +82,13 @@ def addFileKey(s, msg, _bool):
     pass
 
 def deleteTag(s, msg):
+    sucServer = s.recv(1024)
+
     s.send(msg.encode())
 
 def deleteFile(s, msg):
+    sucServer = s.recv(1024)
+
     s.send(msg.encode())
 
 def initializeInstructions():

@@ -249,10 +249,14 @@ def update(client, datos):
         client.recv(1024)
 
 def gettinIn(prev_str, suc_str):
-   
+    
+        
 
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect((node.Prev.ipServer, node.Prev.puertoServidor))
+    
+    sucServer = client.recv(1024)
+
     client.send(("update").encode())
 
     pprev_str = client.recv(1024)  
@@ -284,6 +288,7 @@ def worker(*args):
     client = args[0]
     direction = args[1]
     print("tengo un cliente")
+    client.send((node.Suc.ipServer +  ':' + str(node.Suc.puertoServidor)).encode())
     datos = client.recv(1024)
     _datos = str(datos)
     _datos = _datos[2:len(_datos) - 1]
