@@ -14,14 +14,42 @@ def openFile(s, msg):
     print("Received")
     file.close()
 
-def openTag(tag):
-    
-    pass
+def openTag(s, msg):
+    s.send(msg.encode())
+
+    ffiles = open("files", "wb")
+    input_data = s.recv(1024)
+    while input_data:
+        ffiles.write(input_data)
+        input_data = s.recv(1024)
+    print("Received")
+    ffiles.close()
+
+    ftags = open("tags", "wb")
+    input_data = s.recv(1024)
+    while input_data:
+        ftags.write(input_data)
+        input_data = s.recv(1024)
+    print("Received")
+    ftags.close()
+
+    ffiles = open("files", "r")
+    mfile = ffiles.readline()
+    while mfile:
+        print(mfile)
+        mfile = ffiles.readline()
+    ffiles.close()
+
+    ftags = open("tags", "r")
+    mtag = ftags.readline()
+    while mtag:
+        print(mtag)
+        mtag = ftags.readline()
+    ftags.close()
 
 def addTag(s, msg):
     #tokens = id, tag
     s.send(msg.encode())
-    pass
 
 def addFile(s, msg):
     _msg = str(msg)
@@ -42,14 +70,11 @@ def addFile(s, msg):
     file.close()
     print("The file has been send")
 
-
 def deleteTag(s, msg):
     s.send(msg.encode())
-    pass
 
 def deleteFile(s, msg):
     s.send(msg.encode())
-    pass
 
 def initializeInstructions():
     instructions["openFile"] = openFile
@@ -63,7 +88,9 @@ def initializeInstructions():
 
 initializeInstructions()
 ipServer = "127.0.0.1"
-puertoServidor = 8003
+puertoServidor = 8083
+
+print(ipServer + ' ' +str(puertoServidor))
 
 while True:
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
